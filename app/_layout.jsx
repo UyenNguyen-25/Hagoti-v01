@@ -1,6 +1,7 @@
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
+import ProfileStack from "../navigators/ProfileStack";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,6 +28,7 @@ export default function RootLayout() {
         headerShown: false,
       }}>
       <Stack.Screen name="index" />
+      <Stack.Screen name="profile"/>
     </Stack>
   );
 }

@@ -78,15 +78,16 @@ export default function TabLayout() {
                     }
                 }}
             />
-
             <Tabs.Screen name='profile'
                 options={{
                     tabBarIcon: ({ color, focused }) => {
                         return (
+                            <Link href={'/profile'}>
                             <View style={styles.customView}>
                                 <Feather name="user" size={25} color={color} />
                                 <Text style={{ ...styles.customText, color: focused ? "#FFF" : Colors.PRIMARY }}>Tài khoản</Text>
                             </View>
+                            </Link>
                         )
                     }
                 }}
