@@ -1,10 +1,10 @@
 import { Text, SafeAreaView, ScrollView, StyleSheet, View, Alert, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/Colors'
 import FormFields from '../../components/FormFields'
 import { Link, router, Stack } from 'expo-router'
 import CustomButton from '../../components/CustomButton'
-import auth, { signInWithPhoneNumber } from "@react-native-firebase/auth"
+import auth from "@react-native-firebase/auth"
 import Checkbox from 'expo-checkbox'
 
 const { height } = Dimensions.get("window")
@@ -19,14 +19,35 @@ export default function SignIn() {
         dob: "",
         isChecked: false,
     })
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
+    // If null, no SMS has been sent
+    const [confirm, setConfirm] = useState(null);
 
-    const onCreateAccount = async () => {
-        if (form.phoneNumber && form.password) {
+    // Handle user state changes
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    }
+
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
+
+    const onCreateAccount = async (e) => {
+        const phoneNumber = "+84" + form.phoneNumber.slice(1)
+
+        if (phoneNumber.length > 8) {
             try {
-                signInWithPhoneNumber(auth, form.phoneNumber)
-                // const res = await auth
+                const confirmation = await auth().signInWithPhoneNumber(phoneNumber)
+                setConfirm(confirmation)
+                console.log('====================================');
+                console.log("Confirmation: ", confirmation);
+                console.log('====================================');
+                router.push("/OTP-code")
             } catch (error) {
-                Alert.alert("Ối chời ơi", "Lỗi rồi kìa!!! Kiểm tra lại thông tin đăng ký đi")
+                Alert.alert("Ối giời ơi", "Lỗi rồi kìa!!! Kiểm tra lại thông tin đăng ký đi")
                 console.log('====================================');
                 console.log(error);
                 console.log('====================================');
@@ -55,7 +76,7 @@ export default function SignIn() {
                         </Link>
                         và đồng ý </Text>
                 </View>
-                <CustomButton title={"Tiếp tục"} containerStyles={styles.btn} textStyles={styles.btnText} handlePress={() => router.push('/home')} />
+                <CustomButton title={"Tiếp tục"} containerStyles={styles.btn} textStyles={styles.btnText} handlePress={onCreateAccount} />
             </ScrollView>
         </SafeAreaView>
     )
