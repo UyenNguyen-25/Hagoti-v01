@@ -4,7 +4,7 @@ import { Colors } from '../../constants/Colors'
 import FormFields from '../../components/FormFields'
 import { Link, router, Stack } from 'expo-router'
 import CustomButton from '../../components/CustomButton'
-import auth from "@react-native-firebase/auth"
+import auth, { signInWithPhoneNumber } from "@react-native-firebase/auth"
 import Checkbox from 'expo-checkbox'
 
 const { height } = Dimensions.get("window")
@@ -23,7 +23,7 @@ export default function SignIn() {
     const onCreateAccount = async () => {
         if (form.phoneNumber && form.password) {
             try {
-                createU
+                signInWithPhoneNumber(auth, form.phoneNumber)
                 // const res = await auth
             } catch (error) {
                 Alert.alert("Ối chời ơi", "Lỗi rồi kìa!!! Kiểm tra lại thông tin đăng ký đi")

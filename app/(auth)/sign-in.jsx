@@ -29,7 +29,7 @@ export default function SignIn() {
                 duration: 1000,
                 easing: Easing.linear,
             })
-    }, []);
+    }, [linear]);
 
     const signInWithPhoneNumber = async () => {
         try {
