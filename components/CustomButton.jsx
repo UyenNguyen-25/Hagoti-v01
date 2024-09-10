@@ -6,7 +6,7 @@ export default function CustomButton({ title, handlePress, containerStyles, text
         <TouchableOpacity
             onPress={handlePress}
             activeOpacity={0.7}
-            style={[containerStyles, { opacity: isLoading ? "opacity-50" : "" }]} disabled={isLoading}>
+            style={[containerStyles, isLoading && { opacity: "opacity-50", backgroundColor: "#bbbaba" }]} disabled={isLoading}>
             <Text
                 style={textStyles}>
                 {title}
