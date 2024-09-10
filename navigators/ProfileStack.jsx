@@ -1,12 +1,12 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import Profile from '../app/(tabs)/profile';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import Profile from '../app/(tabs)/profile';
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
-export default function ProfileStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="profile" component={Profile} />
-    </Stack.Navigator>
-  );
-}
+// export default function ProfileStack() {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name="profile" component={Profile} />
+//     </Stack.Navigator>
+//   );
+// }
