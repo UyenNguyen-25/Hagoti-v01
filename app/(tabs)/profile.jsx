@@ -4,14 +4,22 @@ import { Colors } from '../../constants/Colors'
 import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Link, router } from 'expo-router'
+import { Link, router, useNavigation } from 'expo-router'
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Profile() {
+    const navigation = useNavigation();
     return (
         <SafeAreaView style={{ backgroundColor: Colors.SECONDARY, height: "100%" }}>
+            <TouchableOpacity
+                style={{ left: 30, position: 'absolute', marginTop: 60 }}
+                onPress={() => alert("hi")}
+            >
+                <MaterialCommunityIcons name="arrow-left-thin" size={30} color="black" />
+            </TouchableOpacity>
             <ScrollView>
                 <View style={styles.container}>
                     <Image

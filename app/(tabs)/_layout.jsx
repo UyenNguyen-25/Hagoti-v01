@@ -7,7 +7,7 @@ import { Colors } from "../../constants/Colors"
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function TabLayout() {
-    return (
+    return ( 
         <Tabs screenOptions={{
             headerShown: false,
             tabBarShowLabel: false,
@@ -33,6 +33,7 @@ export default function TabLayout() {
 
             <Tabs.Screen name='favorite'
                 options={{
+                    tabBarStyle: { display: "none" },
                     tabBarIcon: ({ color, focused }) => {
                         return (
                             <View style={styles.customView}>
@@ -80,6 +81,7 @@ export default function TabLayout() {
             />
             <Tabs.Screen name='profile'
                 options={{
+                    tabBarStyle: { display: "none" },
                     tabBarIcon: ({ color, focused }) => {
                         return (
                             <Link href={'/profile'}>
