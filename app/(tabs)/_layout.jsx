@@ -1,35 +1,27 @@
-import React from 'react'
-import { Link, Tabs } from 'expo-router'
-import Feather from '@expo/vector-icons/Feather';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Octicons from '@expo/vector-icons/Octicons';
-import { Colors } from "../../constants/Colors"
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Profile from './profile';
+import HomeTabs from '../../components/tabs';
+import MakingPlan from './making-plan';
+import { Colors } from '../../constants/Colors';
+import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 
+<<<<<<< HEAD
 export default function TabLayout() {
     return ( 
         <Tabs screenOptions={{
+=======
+const Stack = createStackNavigator();
+
+export default function ProfileStack() {
+    return (
+        <Stack.Navigator screenOptions={{
+>>>>>>> e031a61e8f0972e889dd0b4be87314088298a164
             headerShown: false,
-            tabBarShowLabel: false,
-            tabBarInactiveTintColor: Colors.PRIMARY,
-            tabBarActiveBackgroundColor: Colors.PRIMARY,
-            tabBarActiveTintColor: Colors.ACTIVE,
-            tabBarStyle: {
-                height: 60
-            }
         }}>
-            <Tabs.Screen name='home'
-                options={{
-                    tabBarIcon: ({ color, focused }) => {
-                        return (
-                            <View style={styles.customView}>
-                                <Feather name="home" size={25} color={color} />
-                                <Text style={{ ...styles.customText, color: focused ? "#FFF" : Colors.PRIMARY }}>Trang chủ</Text>
-                            </View>
-                        )
-                    }
-                }}
+            <Stack.Screen name="tabs" component={HomeTabs} />
+            <Stack.Screen name="profile" component={Profile}
             />
+<<<<<<< HEAD
 
             <Tabs.Screen name='favorite'
                 options={{
@@ -97,17 +89,10 @@ export default function TabLayout() {
 
         </Tabs>
     )
+=======
+            <Stack.Screen name="making-plan" component={MakingPlan}
+            />
+        </Stack.Navigator>
+    );
+>>>>>>> e031a61e8f0972e889dd0b4be87314088298a164
 }
-
-const styles = StyleSheet.create({
-    customView: {
-        alignItems: "center",
-        justifyContent: "center",
-
-    },
-    customText: {
-        color: Colors.PRIMARY,
-        fontSize: 14,
-        fontFamily: "inter"
-    }
-})

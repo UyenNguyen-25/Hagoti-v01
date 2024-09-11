@@ -22,6 +22,9 @@ export default function Profile() {
             </TouchableOpacity>
             <ScrollView>
                 <View style={styles.container}>
+                    <TouchableOpacity style={styles.arrow} onPress={router.back}>
+                        <Ionicons name="arrow-back" size={26} color={"#A5A3A3"} />
+                    </TouchableOpacity>
                     <Image
                         style={styles.avatar}
                         source={require('../../assets/images/spirit.png')}
@@ -97,7 +100,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 50
+        marginVertical: 40
+    },
+    arrow: {
+        position: "absolute",
+        top: 10,
+        left: 25
     },
     avatar: {
         resizeMode: 'contain',

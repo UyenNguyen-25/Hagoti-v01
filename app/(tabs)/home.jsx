@@ -9,6 +9,7 @@ export default function Home() {
     const navigation = useNavigation();
     return (
         <View>
+<<<<<<< HEAD
             <View style={styles.headerView} />
             <SearchInput />
             <View style={styles.content}>
@@ -62,6 +63,9 @@ export default function Home() {
                     </View>
                 </TouchableOpacity>
             </View>
+=======
+            <Text style={{ fontSize: 40, fontFamily: "inter" }}>Hello</Text>
+>>>>>>> e031a61e8f0972e889dd0b4be87314088298a164
         </View>
     )
 }

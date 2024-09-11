@@ -31,6 +31,7 @@ export default function AuthLayout() {
                         </TouchableOpacity>
                     ),
                 }} />
+                <Stack.Screen name='OTP-code' options={{ headerShown: false }} />
                 <Stack.Screen name='forgot-password' />
             </Stack>
         </>
