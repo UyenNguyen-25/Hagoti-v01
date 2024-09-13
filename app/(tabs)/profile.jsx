@@ -9,21 +9,20 @@ import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Link, router, useNavigation } from 'expo-router'
 import { LinearGradient } from 'expo-linear-gradient';
+import { Octicons } from '@expo/vector-icons';
 
 export default function Profile() {
     const navigation = useNavigation();
     return (
         <SafeAreaView style={{ backgroundColor: Colors.SECONDARY, height: "100%" }}>
-            <TouchableOpacity
-                style={{ left: 30, position: 'absolute', marginTop: 60 }}
-                onPress={() => alert("hi")}
-            >
-                <MaterialCommunityIcons name="arrow-left-thin" size={30} color="black" />
-            </TouchableOpacity>
+
             <ScrollView>
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.arrow} onPress={router.back}>
-                        <Ionicons name="arrow-back" size={26} color={"#A5A3A3"} />
+                    <TouchableOpacity
+                        style={styles.arrow}
+                        onPress={router.back}
+                    >
+                        <MaterialCommunityIcons name="arrow-left-thin" size={30} color="black" />
                     </TouchableOpacity>
                     <Image
                         style={styles.avatar}
@@ -64,6 +63,11 @@ export default function Profile() {
                             <TouchableOpacity style={styles.menuItem}>
                                 <Feather name="package" size={24} color="black" />
                                 <Link style={{ fontSize: 16 }} href={''}>Gói của bạn</Link>
+                            </TouchableOpacity>
+                            <View style={styles.horizoltal} />
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Octicons name="history" size={24} />
+                                <Link style={{ fontSize: 16 }} href={''}>Lịch sử</Link>
                             </TouchableOpacity>
                         </View>
                     </View>

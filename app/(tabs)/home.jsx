@@ -1,15 +1,37 @@
-import { View, Text, StyleSheet, Button, Image, Alert, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Button, Image, Alert, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import SearchInput from '../../components/SearchInput'
 import { Colors } from '../../constants/Colors'
 import { Link, router, useNavigation } from 'expo-router'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Octicons from '@expo/vector-icons/Octicons';
+import axios from 'axios'
+import PlaceCardHome from '../../components/PlaceCardHome'
 
 export default function Home() {
-    const navigation = useNavigation();
+    const [list, setList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    console.log(list)
+
+    useEffect(() => {
+        axios.get('https://65459563fe036a2fa954853b.mockapi.io/api/v1/place')
+            .then(res => {
+                setList(res.data);
+                setLoading(false);
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    }, []);
+    if (loading) {
+        return (
+            <View style={styles.loader}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        )
+    }
     return (
         <View>
-<<<<<<< HEAD
             <View style={styles.headerView} />
             <SearchInput />
             <View style={styles.content}>
@@ -20,8 +42,8 @@ export default function Home() {
                         <Text style={{ fontWeight: '500' }}>Thì thầm mình nói nhỏ</Text>
                         <Text style={{ fontWeight: '500' }}>Đi chơi hông ní ơii</Text>
                     </View>
-                    <TouchableOpacity style={styles.btn}>
-                        <Link style={{ fontSize: 16, fontStyle: 'italic', color: Colors.PRIMARY }} href={''}>Let's go</Link>
+                    <TouchableOpacity style={styles.btn} onPress={() => router.push("/making-plan")}>
+                        <Text style={{ fontSize: 16, fontStyle: 'italic', color: Colors.PRIMARY }}>Let's go</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
@@ -31,29 +53,29 @@ export default function Home() {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15, marginLeft: 30, marginBottom: 20 }}>
                 <View>
-                <TouchableOpacity 
-                onPress={() => router.push('navigators/place?typeId=1')}
-                >
-                    <Image style={{ width: 70, height: 70 }} source={require('../../assets/images/food.jpg')} />
-                    <Text>Quán ăn</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => router.push('navigators/place?typeId=1')}
+                    >
+                        <Image style={{ width: 70, height: 70 }} source={require('../../assets/images/food.jpg')} />
+                        <Text>Quán ăn</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity 
-                style={styles.typeBtn}
-                onPress={() => router.push('navigators/place?typeId=2')}
+                <TouchableOpacity
+                    style={styles.typeBtn}
+                    onPress={() => router.push('navigators/place?typeId=2')}
                 >
                     <Image style={{ width: 70, height: 70 }} source={require('../../assets/images/beverage.jpg')} />
                     <Text>Quán nướcc</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                style={styles.typeBtn}
-                onPress={() => router.push('navigators/place?typeId=3')}
+                <TouchableOpacity
+                    style={styles.typeBtn}
+                    onPress={() => router.push('navigators/place?typeId=3')}
                 >
                     <Image style={{ width: 70, height: 70 }} source={require('../../assets/images/entertainment.jpg')} />
                     <Text>Giải trí</Text>
                 </TouchableOpacity>
             </View>
-            <View>
+            <View style={{ flexDirection: 'column', gap: 10 }}>
                 <TouchableOpacity style={styles.container}>
                     <Link style={styles.text} href={''}>
                         Có thể bạn sẽ thích
@@ -62,10 +84,31 @@ export default function Home() {
                         <MaterialCommunityIcons name="arrow-right-thin" size={24} color={Colors.PRIMARY} />
                     </View>
                 </TouchableOpacity>
+                <View style={{ height: 150 }}>
+                    <FlatList
+                        style={{ marginHorizontal: 25 }}
+                        data={list}
+                        keyExtractor={item => item.id.toString()}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+                        renderItem={({ item }) => (
+                            <PlaceCardHome item={item} />
+                        )}
+                    />
+                </View>
             </View>
-=======
-            <Text style={{ fontSize: 40, fontFamily: "inter" }}>Hello</Text>
->>>>>>> e031a61e8f0972e889dd0b4be87314088298a164
+            <View style={{ flexDirection: 'column' }}>
+                <TouchableOpacity style={styles.container}>
+                    <Link style={styles.text} href={''}>
+                        Kế hoạch gần đây của bạn
+                    </Link>
+                    <View style={styles.iconContainer}>
+                        <MaterialCommunityIcons name="arrow-right-thin" size={24} color={Colors.PRIMARY} />
+                    </View>
+                </TouchableOpacity>
+                <Text style={{ textAlign: 'center', fontSize: 20, fontWeight: '300' }}>Bạn chưa có chuyến đi nào</Text>
+            </View>
         </View>
     )
 }
@@ -107,17 +150,17 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between', 
+        justifyContent: 'space-between',
         paddingHorizontal: 20,
         paddingVertical: 10,
-      },
-      text: {
+    },
+    text: {
         fontWeight: '600',
         fontSize: 19,
-      },
-      iconContainer: {
+    },
+    iconContainer: {
         borderRadius: 15,
         backgroundColor: Colors.SECONDARY,
-        padding: 5, 
-      },
+        padding: 5,
+    },
 })

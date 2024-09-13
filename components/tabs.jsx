@@ -11,6 +11,7 @@ import MakingPlan from '../app/(tabs)/making-plan';
 import History from '../app/(tabs)/history';
 import Profile from '../app/(tabs)/profile';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Entypo } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator()
 
@@ -80,8 +81,8 @@ export default function HomeTabs() {
                     tabBarIcon: ({ color, focused }) => {
                         return (
                             <View style={styles.customView}>
-                                <Octicons name="history" size={24} color={color} />
-                                <Text style={{ ...styles.customText, color: focused ? "#FFF" : Colors.PRIMARY }}>Lịch sử</Text>
+                                <Entypo name="paper-plane" size={24} color={color} />
+                                <Text style={{ ...styles.customText, color: focused ? "#FFF" : Colors.PRIMARY }}>Kế hoạch</Text>
                             </View>
                         )
                     }
@@ -91,7 +92,7 @@ export default function HomeTabs() {
                 options={{
                     tabBarButton: () => {
                         return (
-                            <TouchableOpacity style={[styles.customView, { paddingHorizontal: 8 }]} onPress={() => router.push("/profile")}>
+                            <TouchableOpacity style={[styles.customView, { paddingHorizontal: 20  }]} onPress={() => router.push("/profile")}>
                                 <Feather name="user" size={25} color={Colors.PRIMARY} />
                                 <Text style={{ ...styles.customText, color: Colors.PRIMARY }}>Tài khoản</Text>
                             </TouchableOpacity>
