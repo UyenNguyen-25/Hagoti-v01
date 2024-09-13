@@ -28,7 +28,7 @@ export default function LoginScreen() {
             gap: 14,
           }}>
           <Text style={{ ...styles.customText, color: Colors.PRIMARY }}>
-            Cám ơn bạn đã đồng hành cùng
+            CHÀO MỪNG BẠN ĐÃ ĐẾN
           </Text>
           <Image source={require("../assets/images/HAGOTI.png")} resizeMode="contain" alt="Logo" />
           <CustomButton
