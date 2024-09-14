@@ -2,12 +2,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Profile from './profile';
 import HomeTabs from '../../components/tabs';
 import MakingPlan from './making-plan';
-import { Colors } from '../../constants/Colors';
-import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
+import Place from './navigators/place';
 
 const Stack = createStackNavigator();
 
-export default function ProfileStack() {
+export default function tabsLayout() {
     return (
         <Stack.Navigator screenOptions={{
             headerShown: false,
@@ -17,6 +16,7 @@ export default function ProfileStack() {
             />
             <Stack.Screen name="making-plan" component={MakingPlan}
             />
+            <Stack.Screen name="place" component={Place} />
         </Stack.Navigator>
     );
 }

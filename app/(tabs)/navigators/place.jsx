@@ -2,9 +2,9 @@ import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
-import SearchInput from '../../components/SearchInput';
-import PlaceCard from '../../components/PlaceCard';
 import axios from 'axios';
+import SearchInput from '../../../components/SearchInput';
+import PlaceCard from '../../../components/PlaceCard';
 
 const Place = () => {
   const { typeId, query } = useLocalSearchParams();
@@ -13,8 +13,8 @@ const Place = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtered, setFiltered] = useState([]);
-  const router = useRouter(); 
-  console.log('type',type);
+  const router = useRouter();
+  console.log('type', type);
 
   useEffect(() => {
     if (typeId !== type) {
@@ -22,27 +22,27 @@ const Place = () => {
     }
   }, [type]);
 
-    useEffect(() => {
-        axios.get('https://65459563fe036a2fa954853b.mockapi.io/api/v1/place')
-            .then(res => {
-                setList(res.data);
-                setLoading(false);
-            })
-            .catch(e => {
-                console.log(e)
-            })
-    }, []);
+  useEffect(() => {
+    axios.get('https://65459563fe036a2fa954853b.mockapi.io/api/v1/place')
+      .then(res => {
+        setList(res.data);
+        setLoading(false);
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }, []);
 
-    useEffect(() => {
-      let filtered = list.filter(item => item.typeId === type);
+  useEffect(() => {
+    let filtered = list.filter(item => item.typeId === type);
 
-      if(query) {
-        filtered = filtered.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
-      };
+    if (query) {
+      filtered = filtered.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
+    };
 
-      setFiltered(filtered);
-      
-    }, [list, type])
+    setFiltered(filtered);
+
+  }, [list, type])
 
   return (
     <View style={styles.container}>
@@ -54,37 +54,37 @@ const Place = () => {
       </View>
       <View style={styles.typeList}>
         <TouchableOpacity
-          style={[styles.typeButton, type === '1' && styles.condition ]}
+          style={[styles.typeButton, type === '1' && styles.condition]}
           onPress={() => setType('1')}
         >
-          <Image style={styles.typeImage} source={require('../../assets/images/food.jpg')} />
+          <Image style={styles.typeImage} source={require('../../../assets/images/food.jpg')} />
           <Text style={styles.typeText}>Quán ăn</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.typeButton, type === '2' && styles.condition ]}
+          style={[styles.typeButton, type === '2' && styles.condition]}
           onPress={() => setType('2')}
         >
-          <Image style={styles.typeImage} source={require('../../assets/images/beverage.jpg')} />
+          <Image style={styles.typeImage} source={require('../../../assets/images/beverage.jpg')} />
           <Text style={styles.typeText}>Quán nước</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.typeButton, type === '3' && styles.condition ]}
+          style={[styles.typeButton, type === '3' && styles.condition]}
           onPress={() => setType('3')}
         >
-          <Image style={styles.typeImage} source={require('../../assets/images/entertainment.jpg')} />
+          <Image style={styles.typeImage} source={require('../../../assets/images/entertainment.jpg')} />
           <Text style={styles.typeText}>Giải trí</Text>
         </TouchableOpacity>
-        
+
       </View>
       <FlatList
-                style={{ flexDirection: 'column', marginVertical: 30 }}
-                data={filtered}
-                keyExtractor={item => item.id.toString()}
-                ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-                renderItem={({ item }) => (
-                    <PlaceCard item={item}/>
-                )}
-            />
+        style={{ flexDirection: 'column', marginVertical: 30 }}
+        data={filtered}
+        keyExtractor={item => item.id.toString()}
+        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+        renderItem={({ item }) => (
+          <PlaceCard item={item} />
+        )}
+      />
     </View>
   );
 };
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   searchInput: {
-    flex: 1, 
+    flex: 1,
   },
   typeList: {
     flexDirection: 'row',
