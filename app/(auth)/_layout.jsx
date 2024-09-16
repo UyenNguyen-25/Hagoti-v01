@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { router, Stack } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
@@ -7,7 +7,8 @@ import { Colors } from '../../constants/Colors'
 export default function AuthLayout() {
     return (
         <>
-            <Stack >
+            <Stack initialRouteName='welcome'>
+                <Stack.Screen name='welcome' options={{ headerShown: false }} />
                 <Stack.Screen name='sign-in' options={{ headerShown: false }} />
                 <Stack.Screen name='sign-up' options={{
                     title: "",

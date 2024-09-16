@@ -90,7 +90,7 @@ export default function Profile() {
                             style={{ ...styles.menuItem, justifyContent: 'center' }}
                             onPress={() => router.push("index")}
                         >
-                            <Link style={{ fontSize: 18, color: '#FFF', fontFamily: 'inter', fontWeight: '800' }} href={''}>Đăng xuất</Link>
+                            <Link style={{ fontSize: 18, color: '#FFF', fontFamily: 'inter', fontWeight: '800' }} href={'../welcome'}>Đăng xuất</Link>
                         </TouchableOpacity>
                     </View>
                 </View>

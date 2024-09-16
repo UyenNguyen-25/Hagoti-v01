@@ -1,6 +1,7 @@
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
+import { AuthProvider } from "../hooks/useAuth"
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,12 +23,13 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="index" />
-      {/* <Stack.Screen name="place" /> */}
-    </Stack>
+    <AuthProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="index" />
+      </Stack>
+    </AuthProvider>
   );
 }

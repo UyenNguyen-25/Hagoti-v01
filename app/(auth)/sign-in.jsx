@@ -5,9 +5,7 @@ import FormFields from '../../components/FormFields'
 import { Link, router } from 'expo-router'
 import CustomButton from '../../components/CustomButton'
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import auth from "@react-native-firebase/auth"
-import { firebase } from '@react-native-firebase/firestore'
-
+import useAuth from "../../hooks/useAuth"
 const { height } = Dimensions.get('window');
 
 export default function SignIn() {
@@ -15,7 +13,10 @@ export default function SignIn() {
         phoneNumber: "",
         password: ""
     })
-    const [confirm, setConfirm] = useState(null)
+    const { user } = useAuth()
+    console.log('====================================');
+    console.log(user);
+    console.log('====================================');
 
     const linear = useSharedValue(height);
 
@@ -30,31 +31,6 @@ export default function SignIn() {
                 easing: Easing.linear,
             })
     }, [linear]);
-
-    const signInWithPhoneNumber = async () => {
-        try {
-            const confirmation = await auth().signInWithPhoneNumber(form.phoneNumber)
-            setConfirm(confirmation)
-        } catch (error) {
-            console.log("Error sending code: ", error);
-
-        }
-    }
-
-    const confirmCode = async () => {
-        try {
-            const userCredential = await confirm.confirm(code)
-            const user = userCredential.user
-
-            const userDocument = await firebase.firestore().collection("user").doc(user.uid).get()
-            if (userDocument.exists) {
-                router.push("/home")
-            } else { router.push("/sign-up") }
-        } catch (error) {
-            console.log("Invalid code", error);
-
-        }
-    }
 
     return (
         <SafeAreaView style={{ backgroundColor: Colors.SECONDARY, height: "100%" }}>

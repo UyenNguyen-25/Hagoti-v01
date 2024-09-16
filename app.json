@@ -17,18 +17,13 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./google-services.json",
-      "package": "com.khanhhoang_2503.hagotiv01"
+      "package": "com.khanhhoang_2503.hagoti"
     },
     "web": {
       "bundler": "metro",
       "output": "static"
     },
-    "plugins": [
-      "expo-router",
-      "@react-native-firebase/app",
-      "@react-native-firebase/auth"
-    ],
+    "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
     },

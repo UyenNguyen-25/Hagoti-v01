@@ -5,6 +5,7 @@ import FormFields from '../../components/FormFields'
 import { Link, router } from 'expo-router'
 import CustomButton from '../../components/CustomButton'
 import Checkbox from 'expo-checkbox'
+import { createUser } from '../../lib/appwrite'
 
 const formError = {
     username: "Vui lòng điền đầy đủ thông tin",
@@ -15,7 +16,7 @@ const formError = {
     dob: "Vui lòng nhập ngày sinh của bạn",
 }
 
-export default function SignIn() {
+export default function SignUp() {
     const [form, setForm] = useState({
         username: "",
         phoneNumber: "",
@@ -30,11 +31,13 @@ export default function SignIn() {
     const [isError, setIsError] = useState(false)
 
     const onCreateAccount = () => {
+        const phoneNumber = "+84" + form.phoneNumber.slice(1)
         try {
             setLoading(true)
             setIsError(false)
+            // createUser()
             console.log('====================================');
-            console.log("Success");
+            console.log(phoneNumber);
             console.log('====================================');
         } catch (error) {
             setLoading(false)
@@ -67,6 +70,13 @@ export default function SignIn() {
                     autoComplete={"phone-number"}
                     errorMsg={formError.phoneNumber}
                 />
+                {/* <FormFields title={"Email"}
+                    value={form.email}
+                    handleChangeText={(e) => setForm({ ...form, email: e })}
+                    autoComplete={"email"}
+                    keyboardType={"email"}
+                    errorMsg={formError.phoneNumber}
+                /> */}
                 <FormFields title={"Mật khẩu"}
                     value={form.password}
                     handleChangeText={(e) => setForm({ ...form, password: e })}
@@ -100,7 +110,7 @@ export default function SignIn() {
                         </Link>
                         và đồng ý </Text>
                 </View>
-                <CustomButton title={"Tiếp tục"} containerStyles={styles.btn} textStyles={styles.btnText} handlePress={() => onCreateAccount()} isLoading={isError} />
+                <CustomButton title={"Tiếp tục"} containerStyles={styles.btn} textStyles={styles.btnText} handlePress={() => onCreateAccount()} isLoading={isError && false} />
             </ScrollView>
             {isLoading && <><ActivityIndicator size={"large"} /><Text>Vui lòng đợi...</Text></>}
         </SafeAreaView>
