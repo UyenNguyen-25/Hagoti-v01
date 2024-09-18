@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput, Alert, Button, TouchableOpacity, Image, SafeAreaView, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/Colors'
 import Feather from '@expo/vector-icons/Feather';
 import { useController, useForm } from 'react-hook-form';
@@ -12,6 +12,8 @@ import { Octicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Popup from '../../components/Popup';
 import { useNavigation } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
+import PlaceCardMaking from '../../components/PlaceCardMaking';
 
 export default function MakingPlan() {
     const [selectedOption, setSelectedOption] = useState(null);
@@ -19,7 +21,10 @@ export default function MakingPlan() {
     const [fromTime, setFromTime] = useState(new Date());
     const [date, setDate] = useState(new Date());
     const navigation = useNavigation();
-    const { control, handleSubmit } = useForm({
+    const route = useRoute(); // Lấy tham số từ route
+    const planData = route.params?.planData;
+    console.log('planData', planData)
+    const { control, handleSubmit, setValue } = useForm({
         defaultValues: {
             namePlan: "Kế hoạch của bạn",
             selectedOption: null,
@@ -31,7 +36,18 @@ export default function MakingPlan() {
     const { field } = useController({
         control,
         name: 'namePlan',
-    })
+    });
+
+    useEffect(() => {
+        if (planData) {
+            setValue('namePlan', planData.name || 'Kế hoạch của bạn');
+            setSelectedOption(planData.selectedOption || null);
+            setToTime(new Date(planData.to));
+            setFromTime(new Date(planData.from));
+            setDate(new Date(planData.date));
+        }
+    }, [planData, setValue]);
+
     const onSubmit = (formData) => {
         const fullData = {
             ...formData,
@@ -103,7 +119,7 @@ export default function MakingPlan() {
                     <View style={{ flexDirection: 'row', margin: 20, gap: 20 }}>
                         <Text style={styles.text}>Điểm đến:</Text>
                     </View>
-                    <View style={{ marginHorizontal: 20 }}>
+                    {/* <View style={{ marginHorizontal: 20 }}>
                         <View style={{ flexDirection: 'row', gap: 25 }}>
                             <View style={{ width: 80, height: 30, backgroundColor: Colors.PRIMARY, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: 'white', fontSize: 18 }}>#1</Text>
@@ -129,6 +145,20 @@ export default function MakingPlan() {
                             </View>
                             <Popup />
                         </View>
+                        <View style={{ flexDirection: 'row', gap: 20, borderWidth: 2, borderColor: Colors.PRIMARY, paddingHorizontal: 20, width: '50%', paddingVertical: 10 }}>
+                            <Feather name="plus-circle" size={24} color={Colors.PRIMARY} />
+                            <Text style={{ fontSize: 17 }}>Thêm địa điểm</Text>
+                        </View>
+                    </View> */}
+                    <View>
+                        {planData?.places.map((place, index) => (
+                            <PlaceCardMaking
+                                key={place._id}
+                                placeId={place.placeId}
+                                order={place.order}
+                                // Pass other necessary props to PlaceCardMaking here
+                            />
+                        ))}
                         <View style={{ flexDirection: 'row', gap: 20, borderWidth: 2, borderColor: Colors.PRIMARY, paddingHorizontal: 20, width: '50%', paddingVertical: 10 }}>
                             <Feather name="plus-circle" size={24} color={Colors.PRIMARY} />
                             <Text style={{ fontSize: 17 }}>Thêm địa điểm</Text>

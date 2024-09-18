@@ -7,14 +7,14 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import axios from 'axios'
 import PlaceCardHome from '../../components/PlaceCardHome'
+import { BASE_URL } from '../../api/apiConfig'
 
 export default function Home() {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
-    console.log(list)
 
     useEffect(() => {
-        axios.get('https://65459563fe036a2fa954853b.mockapi.io/api/v1/place')
+        axios.get(`${BASE_URL}/place/get-all-place`)
             .then(res => {
                 setList(res.data);
                 setLoading(false);
@@ -23,13 +23,6 @@ export default function Home() {
                 console.log(e)
             })
     }, []);
-    if (loading) {
-        return (
-            <View style={styles.loader}>
-                <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-        )
-    }
     return (
         <View>
             <View style={styles.headerView} />
@@ -88,7 +81,7 @@ export default function Home() {
                     <FlatList
                         style={{ marginHorizontal: 25 }}
                         data={list}
-                        keyExtractor={item => item.id.toString()}
+                        keyExtractor={item => item._id.toString()}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={() => <View style={{ width: 10 }} />}

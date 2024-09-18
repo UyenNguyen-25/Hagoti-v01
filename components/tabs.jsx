@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, router } from 'expo-router'
+import { Link, router, useNavigation } from 'expo-router'
 import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Octicons from '@expo/vector-icons/Octicons';
@@ -8,14 +8,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Home from '../app/(tabs)/home';
 import Favorite from '../app/(tabs)/favorite';
 import MakingPlan from '../app/(tabs)/making-plan';
-import History from '../app/(tabs)/history';
 import Profile from '../app/(tabs)/profile';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo } from '@expo/vector-icons';
+import PlansScreen from '../app/(tabs)/plan';
+import axios from 'axios';
+import { BASE_URL } from '../api/apiConfig';
 
 const Tab = createBottomTabNavigator()
 
 export default function HomeTabs() {
+    const navigation = useNavigation();
 
     return (
         <Tab.Navigator screenOptions={{
@@ -57,6 +60,18 @@ export default function HomeTabs() {
             <Tab.Screen name='making-plan' component={MakingPlan}
                 options={{
                     tabBarButton: () => {
+                        const handlePress = async () => {
+                            try {
+                                const response = await axios.post(`${BASE_URL}/plan/create-random`, { userId: '66e984774dee6946cce9970b' });
+                                const planData = response.data;
+                                if (planData) {
+                                    // Assuming you are using React Navigation
+                                    navigation.navigate('making-plan', { planData });
+                                }
+                            } catch (error) {
+                                console.error('Error creating random plan:', error);
+                            }
+                        };
                         return (
                             <TouchableOpacity style={{
                                 top: -30,
@@ -68,7 +83,10 @@ export default function HomeTabs() {
                                 alignItems: "center",
                                 justifyContent: "center",
                                 backgroundColor: "#FFF",
-                            }} onPress={() => router.push("/making-plan")}>
+                            }} 
+                            // onPress={() => router.push("/making-plan")}
+                            onPress={() => handlePress()}
+                            >
                                 <AntDesign name="pluscircle" size={60} color={Colors.PRIMARY} />
                             </TouchableOpacity>
                         )
@@ -76,7 +94,7 @@ export default function HomeTabs() {
                 }}
             />
 
-            <Tab.Screen name='history' component={History}
+            <Tab.Screen name='plan' component={PlansScreen}
                 options={{
                     tabBarIcon: ({ color, focused }) => {
                         return (
